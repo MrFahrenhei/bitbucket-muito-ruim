@@ -31,3 +31,6 @@ volumes:
   mysqldata:
 
 #docker inspect <container id> | grep "IPAddress"
+#docker inspect <container id> | grep "IPAddress"
+# docker exec -it docker-php_php_1 sh
+# docker compose up --build -d
