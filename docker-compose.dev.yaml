@@ -12,6 +12,7 @@ services:
       dockerfile: ./php/Dockerfile
     volumes:
       - ./app:/var/www/html
+    #volumes overwrite what is inside /html
   # mysql
   db:
     image: mysql:8.0
@@ -30,7 +31,7 @@ services:
 volumes:
   mysqldata:
 
-#docker inspect <container id> | grep "IPAddress"
-#docker inspect <container id> | grep "IPAddress"
+# docker inspect <container id> | grep "IPAddress"
 # docker exec -it docker-php_php_1 sh
 # docker compose up --build -d
+# docker compose -f docker-compose.dev.yaml up --build -d
