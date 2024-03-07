@@ -1,6 +1,6 @@
 {
   "name": "7digitaltech/avetools",
-  "description": "A Docker demo  for avetools.com",
+  "description": "A Docker demo for avetools.com",
   "minimum-stability": "dev",
   "license": "MIT",
   "authors": [

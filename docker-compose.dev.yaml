@@ -10,9 +10,23 @@ services:
   app:
     build:
       dockerfile: ./php/Dockerfile
+#      target: app_dev
+      target: "${BUILD_TARGET:-app}"
     volumes:
+      #volumes overwrite what is inside /html
       - ./app:/var/www/html
-    #volumes overwrite what is inside /html
+      - ./php/conf.d/xdebug.ini:/user/local/etc/php/conf.d/xdebug.ini:ro
+    environment:
+      MYSQL_HOST: ${MYSQL_HOST}
+      MYSQL_PORT: ${MYSQL_PORT}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PORT: ${REDIS_PORT}
+      XDEBUG_MODE: "${XDEBUG_MODE:-off}"
+    extra_hosts:
+      - host.docker.internal:host-gateway
   # mysql
   db:
     image: mysql:8.0
@@ -22,16 +36,24 @@ services:
       - '4306:3306'
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: secret
-      MYSQL_USER: user
-      MYSQL_PASSWORD: secret
-      MYSQL_DATABASE: docker-php
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
   # redis
+  cache:
+    image: redis:7.2.4
 
 volumes:
   mysqldata:
 
 # docker inspect <container id> | grep "IPAddress"
-# docker exec -it docker-php_php_1 sh
+# docker exec -it <name> sh (name: avetools_symfony-app-1)
 # docker compose up --build -d
 # docker compose -f docker-compose.dev.yaml up --build -d
+# docker compose -f docker-compose.dev.yaml down
+# XDEBUG_MODE=debug docker compose -f docker-compose.dev.yaml up -d
+# docker compose -f docker-compose.dev.yaml --env-file .env.local up --build -d
+
+# composer install --ignore-platform-reqs (ignora a versão do pc)
+# composer dump-autoload
