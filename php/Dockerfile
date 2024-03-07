@@ -35,9 +35,10 @@ FROM app as app_dev
 # when we run docker compose up if we need it
 ENV XDEBUG_MODE=off
 
+# copy xdebug config file into container
 # COPY ./php/conf.d/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 COPY ./php/conf.d/xdebug.ini $PHP_INI_DIR/conf.d/xdebug.ini
 
 # install xdebug
 RUN set -eux; \
-    install-php-extensions xdebug
+    install-php-extensions xdebug;
