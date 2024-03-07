@@ -7,7 +7,7 @@ COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr
 # install php extensions
 # exit on erros, exit on unset variable, print every command as it is executed
 RUN set -eux; \
-    install-php-extensions pdo pdo_mysql;
+    install-php-extensions pdo pdo_pgsql;
 
 # allow super user - set this if use Compsoer as a super user at all times like in docker containers
 ENV COMPOSER_ALLOW_SUPERUSER=1
