@@ -1,5 +1,7 @@
 FROM php:8.2-fpm-alpine as app
 
+COPY ./php/php.ini /usr/local/etc/php/
+
 # Useful php extension installer image, copy binary into your container
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 
